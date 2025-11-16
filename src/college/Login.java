@@ -1,0 +1,314 @@
+package college;
+
+import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
+
+public class Login extends javax.swing.JPanel {
+
+    MainFrame main;
+
+    public Login(MainFrame main) {
+        initComponents();
+        this.main = main;
+    }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabel8 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        email = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        signinButton1 = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        studentButton1 = new javax.swing.JButton();
+        facultyButton1 = new javax.swing.JButton();
+        adminButton1 = new javax.swing.JButton();
+        registerBtn = new javax.swing.JButton();
+        password = new javax.swing.JPasswordField();
+        jLabel12 = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(248, 251, 255));
+        setName("Login "); // NOI18N
+
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo.png"))); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("COLLEGE MANAGEMENT SYSTEM");
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel6.setText("Login Panel");
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel7.setText("Select your role and enter your credentials");
+
+        jLabel9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel9.setText("Email");
+
+        email.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel10.setText("Password");
+
+        signinButton1.setBackground(new java.awt.Color(0, 0, 0));
+        signinButton1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        signinButton1.setForeground(new java.awt.Color(255, 255, 255));
+        signinButton1.setText("Sign in as Student");
+        signinButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signinButton1ActionPerformed(evt);
+            }
+        });
+
+        studentButton1.setBackground(new java.awt.Color(21, 93, 252));
+        studentButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        studentButton1.setForeground(new java.awt.Color(255, 255, 255));
+        studentButton1.setText("Student");
+        studentButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studentButton1ActionPerformed(evt);
+            }
+        });
+
+        facultyButton1.setBackground(new java.awt.Color(242, 242, 242));
+        facultyButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        facultyButton1.setText("Faculty");
+        facultyButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                facultyButton1ActionPerformed(evt);
+            }
+        });
+
+        adminButton1.setBackground(new java.awt.Color(242, 242, 242));
+        adminButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        adminButton1.setText("Admin");
+        adminButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(studentButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addComponent(facultyButton1)
+                .addGap(55, 55, 55)
+                .addComponent(adminButton1)
+                .addGap(22, 22, 22))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(studentButton1)
+                    .addComponent(facultyButton1)
+                    .addComponent(adminButton1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        registerBtn.setText("register");
+        registerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(registerBtn)
+                    .addComponent(signinButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
+                    .addComponent(email)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(password))
+                .addContainerGap(39, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(signinButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(registerBtn)
+                .addContainerGap(37, Short.MAX_VALUE))
+        );
+
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setText("© 2025 EduManage. All rights reserved.");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1123, Short.MAX_VALUE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(14, 14, 14))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(342, 342, 342)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(97, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addGap(43, 43, 43)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel12)
+                .addGap(65, 65, 65))
+        );
+
+        getAccessibleContext().setAccessibleName("Login");
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_emailActionPerformed
+
+    private void signinButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signinButton1ActionPerformed
+        char[] pass = password.getPassword();        
+        // Email Validation
+        if (!email.getText().matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            email.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            JOptionPane.showMessageDialog(this,
+                    "Please enter a valid email address.",
+                    "Invalid Email",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        } else {
+            email.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+        }
+        
+        // Password Validation
+        if (pass.length < 6) {
+            password.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            
+            JOptionPane.showMessageDialog(this,
+                    "Password must be at least 6 characters long.",
+                    "Weak Password",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        } else {
+            password.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+        }
+        
+    }//GEN-LAST:event_signinButton1ActionPerformed
+
+    private void studentButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentButton1ActionPerformed
+        studentButton1.setBackground(new Color(66, 133, 244));
+        studentButton1.setForeground(new java.awt.Color(255, 255, 255));
+
+        facultyButton1.setBackground(new Color(242, 242, 242));
+        facultyButton1.setForeground(new java.awt.Color(0, 0, 0));
+
+        adminButton1.setBackground(new Color(242, 242, 242));
+        adminButton1.setForeground(new java.awt.Color(0, 0, 0));
+
+        signinButton1.setText("Sign in as Student");
+    }//GEN-LAST:event_studentButton1ActionPerformed
+
+    private void facultyButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facultyButton1ActionPerformed
+        facultyButton1.setBackground(new Color(66, 133, 244));
+        facultyButton1.setForeground(new java.awt.Color(255, 255, 255));
+
+        studentButton1.setBackground(new Color(242, 242, 242));
+        studentButton1.setForeground(new java.awt.Color(0, 0, 0));
+
+        adminButton1.setBackground(new Color(242, 242, 242));
+        adminButton1.setForeground(new java.awt.Color(0, 0, 0));
+
+        signinButton1.setText("Sign in as Faculty");
+    }//GEN-LAST:event_facultyButton1ActionPerformed
+
+    private void adminButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminButton1ActionPerformed
+        adminButton1.setBackground(new Color(66, 133, 244));
+        adminButton1.setForeground(new java.awt.Color(255, 255, 255));
+
+        facultyButton1.setBackground(new Color(242, 242, 242));
+        facultyButton1.setForeground(new java.awt.Color(0, 0, 0));
+
+        studentButton1.setBackground(new Color(242, 242, 242));
+        studentButton1.setForeground(new java.awt.Color(0, 0, 0));
+        signinButton1.setText("Sign in as Admin");
+    }//GEN-LAST:event_adminButton1ActionPerformed
+
+    private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
+        CardLayout cl = (CardLayout) main.mainPanel.getLayout();
+        cl.show(main.mainPanel, "register");
+    }//GEN-LAST:event_registerBtnActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton adminButton1;
+    private javax.swing.JTextField email;
+    private javax.swing.JButton facultyButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPasswordField password;
+    private javax.swing.JButton registerBtn;
+    private javax.swing.JButton signinButton1;
+    private javax.swing.JButton studentButton1;
+    // End of variables declaration//GEN-END:variables
+}
