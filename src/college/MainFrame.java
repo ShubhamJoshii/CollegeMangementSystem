@@ -11,10 +11,17 @@ public class MainFrame extends javax.swing.JFrame {
                         getClass().getResource("/images/Logo.png")
                 ).getImage()
         );
-        Login loginPanel = new Login(this);
+            Login loginPanel = new Login(this);
         Register registerPanel = new Register(this);
+        Home homePanel = new Home(this);
+        Students studentPanel = new Students(this);
+        
         mainPanel.add(loginPanel, "login");
         mainPanel.add(registerPanel, "register");
+        
+        mainPanel.add(homePanel, "home");
+        mainPanel.add(studentPanel, "students");
+    
     }
 
     @SuppressWarnings("unchecked")

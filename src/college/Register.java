@@ -3,6 +3,10 @@ package college;
 import java.awt.*;
 import java.util.Arrays;
 import javax.swing.*;
+import collegemanagement.*;
+import java.sql.*;
+import org.mindrot.jbcrypt.BCrypt;
+
 
 public class Register extends javax.swing.JPanel {
 
@@ -32,7 +36,7 @@ public class Register extends javax.swing.JPanel {
         password = new javax.swing.JPasswordField();
         confirmPassword = new javax.swing.JPasswordField();
         jLabel11 = new javax.swing.JLabel();
-        selectRole = new javax.swing.JComboBox<>();
+        userRole = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -104,11 +108,11 @@ public class Register extends javax.swing.JPanel {
         jLabel11.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel11.setText("Select your Role");
 
-        selectRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Student", "Faculty", "Admin" }));
-        selectRole.setPreferredSize(new java.awt.Dimension(72, 30));
-        selectRole.addActionListener(new java.awt.event.ActionListener() {
+        userRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Student", "Faculty", "Admin" }));
+        userRole.setPreferredSize(new java.awt.Dimension(72, 30));
+        userRole.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selectRoleActionPerformed(evt);
+                userRoleActionPerformed(evt);
             }
         });
 
@@ -141,7 +145,7 @@ public class Register extends javax.swing.JPanel {
                                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(selectRole, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(userRole, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(registerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(41, 41, 41))
         );
@@ -157,7 +161,7 @@ public class Register extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(selectRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(userRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -230,106 +234,117 @@ public class Register extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_userNameActionPerformed
 
-    private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        // TODO add your handling code here:
+    private String checkValidation(char[] pass, char[] confirmPass) {
 
-        char[] pass = password.getPassword();
-        char[] confirmPass = confirmPassword.getPassword();
+        String user = userName.getText().trim();
+        String mail = email.getText().trim();
+        String contact = contactNumber.getText().trim();
 
-        if (userName.getText().isEmpty() || email.getText().isEmpty() || contactNumber.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "All fields are required.",
-                    "Validation Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            return;
+        // Required fields
+        if (user.isEmpty() || mail.isEmpty() || contact.isEmpty()) {
+            return "All fields are required.";
         }
 
-        // Password Validation
+        // Password length
         if (pass.length < 6) {
             password.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
             confirmPassword.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-
-            JOptionPane.showMessageDialog(this,
-                    "Password must be at least 6 characters long.",
-                    "Weak Password",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            return;
-        } else if (!Arrays.equals(pass, confirmPass)) {
-            password.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            confirmPassword.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-
-            JOptionPane.showMessageDialog(this,
-                    "Passwords do not match!",
-                    "Password Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            return;
-        } else {
-            password.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-            confirmPassword.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+            return "Password must be at least 6 characters long.";
         }
 
-        // Email Validation
-        if (!email.getText().matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+        // Password match
+        if (!Arrays.equals(pass, confirmPass)) {
+            password.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            confirmPassword.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            return "Passwords do not match!";
+        }
+
+        // Reset borders if OK
+        password.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+        confirmPassword.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+
+        // Email validation (improved regex)
+        if (!mail.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
             email.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            JOptionPane.showMessageDialog(this,
-                    "Please enter a valid email address.",
-                    "Invalid Email",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            return;
+            return "Please enter a valid email address.";
         } else {
             email.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         }
 
-        // Contact Number Validation
-        if (!contactNumber.getText().matches("\\d+")) {
+        // Contact number must contain digits only
+        if (!contact.matches("\\d+")) {
             contactNumber.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            if (!contactNumber.getText().matches("\\d+")) {
+            return "Contact number must contain only digits.";
+        }
+
+        // Contact length
+        if (contact.length() != 10) {
+            contactNumber.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            return "Contact number must be exactly 10 digits.";
+        }
+        contactNumber.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+        return null;
+    }
+
+    private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        char[] pass = password.getPassword();
+        char[] confirmPass = confirmPassword.getPassword();
+        String result = checkValidation(pass, confirmPass);
+        // hashing
+        
+        if (result == null) {
+            String hashedPassword = BCrypt.hashpw(new String(pass), BCrypt.gensalt(12));
+
+            try {
+                Connection conn = DBConnection.getConnection();
+
+                String sql = "INSERT INTO users (username, email, password, contact, role) VALUES (?,?,?,?,?)";
+                PreparedStatement pst = conn.prepareStatement(sql);
+
+                pst.setString(1, userName.getText());
+                pst.setString(2, email.getText());
+                pst.setString(3, hashedPassword);
+                pst.setString(4, contactNumber.getText());
+                pst.setString(5, userRole.getSelectedItem().toString());
+
+                int status = pst.executeUpdate();
+
+                if (status > 0) {
+                    System.out.println("Success");
+                    JOptionPane.showMessageDialog(this,
+                            "Registration Successful!",
+                            "Success",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+
+                } else {
+                    System.out.println("Un-Success");
+                    JOptionPane.showMessageDialog(this,
+                            "Registration UnSuccessful! " + "",
+                            "Success",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                }
+
+                pst.close();
+                conn.close();
+
+            } catch (ClassNotFoundException | SQLException e) {
+                System.out.println("Error in register: " + e.getMessage());
                 JOptionPane.showMessageDialog(this,
-                        "Contact number must contain digits only.",
-                        "Invalid Contact Number",
-                        JOptionPane.ERROR_MESSAGE
-                );
+                            "Registration UnSuccessful: " + e.getMessage(),
+                            "Success",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
             }
-            return;
-        } else if (contactNumber.getText().length() != 10) {
-            contactNumber.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            JOptionPane.showMessageDialog(this,
-                    "Contact number must be 10 digits.",
-                    "Invalid Contact Length",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            return;
+
         } else {
-            contactNumber.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-        }
-
-        if (contactNumber.getText().length() != 10) {
-            contactNumber.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
             JOptionPane.showMessageDialog(this,
-                    "Contact number must be 10 digits.",
-                    "Invalid Contact Length",
+                    result,
+                    "Validation Error",
                     JOptionPane.ERROR_MESSAGE
             );
-            return;
         }
-
-        // VALIDATION PASSED!
-        JOptionPane.showMessageDialog(this,
-                "Registration Successful!",
-                "Success",
-                JOptionPane.INFORMATION_MESSAGE
-        );
-
-        System.out.println("UserName: " + userName.getText());
-        System.out.println("Email: " + email.getText());
-        System.out.println("Password: " + new String(pass));
-        System.out.println("Confirm Password: " + new String(confirmPass));
-        System.out.println("Contact Number: " + contactNumber.getText());
-
     }//GEN-LAST:event_registerButtonActionPerformed
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
@@ -346,12 +361,12 @@ public class Register extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_contactNumberActionPerformed
 
-    private void selectRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectRoleActionPerformed
+    private void userRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userRoleActionPerformed
         // TODO add your handling code here:
-        String selectedChoice = selectRole.getSelectedItem().toString();
+        String selectedChoice = userRole.getSelectedItem().toString();
 //        System.out.println("Selected: " + selectedChoice);
         registerButton.setText("Register as " + selectedChoice);
-    }//GEN-LAST:event_selectRoleActionPerformed
+    }//GEN-LAST:event_userRoleActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -372,7 +387,7 @@ public class Register extends javax.swing.JPanel {
     private javax.swing.JPasswordField password;
     private javax.swing.JButton registerBtn;
     private javax.swing.JButton registerButton;
-    private javax.swing.JComboBox<String> selectRole;
     private javax.swing.JTextField userName;
+    private javax.swing.JComboBox<String> userRole;
     // End of variables declaration//GEN-END:variables
 }

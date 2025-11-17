@@ -3,14 +3,18 @@ package college;
 import java.awt.*;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
+import collegemanagement.*;
+import java.sql.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class Login extends javax.swing.JPanel {
 
     MainFrame main;
-
+    private String selectedRole;
     public Login(MainFrame main) {
         initComponents();
         this.main = main;
+        this.selectedRole = "Student";
     }
 
     @SuppressWarnings("unchecked")
@@ -56,6 +60,7 @@ public class Login extends javax.swing.JPanel {
         jLabel9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel9.setText("Email");
 
+        email.setText("shubhamjoshi@gmail.com");
         email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 emailActionPerformed(evt);
@@ -133,6 +138,8 @@ public class Login extends javax.swing.JPanel {
                 registerBtnActionPerformed(evt);
             }
         });
+
+        password.setText("Joshi@123");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -220,33 +227,85 @@ public class Login extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_emailActionPerformed
 
-    private void signinButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signinButton1ActionPerformed
-        char[] pass = password.getPassword();        
+    private String checkValidation(char[] pass) {
         // Email Validation
         if (!email.getText().matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
             email.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            JOptionPane.showMessageDialog(this,
-                    "Please enter a valid email address.",
-                    "Invalid Email",
-                    JOptionPane.ERROR_MESSAGE
-            );
-        } else {
-            email.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+            return "Please enter a valid email address.";
         }
-        
+        email.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+
         // Password Validation
         if (pass.length < 6) {
             password.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            
+            return "Password must be at least 6 characters long.";
+        }
+        password.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+        return null;
+    }
+
+    private void signinButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signinButton1ActionPerformed
+        char[] pass = password.getPassword();
+        String result = checkValidation(pass);
+        if (result == null) {
+            try {
+                Connection conn = DBConnection.getConnection();
+
+                String sql = "SELECT * FROM users WHERE email = ? AND role = ?";
+                PreparedStatement pst = conn.prepareStatement(sql);
+
+                pst.setString(1, email.getText());
+                pst.setString(2, selectedRole);
+
+                ResultSet res = pst.executeQuery();
+                
+
+                if (res.next()) {
+                    String hashedPassword = res.getString("password");
+                    if (BCrypt.checkpw(new String(pass), hashedPassword)) {
+                        JOptionPane.showMessageDialog(this, "Login Successful!");
+
+                        // Get user role (optional)
+                        String role = res.getString("role");
+                        System.out.println("Logged in as: " + role);
+
+                        CardLayout cl = (CardLayout) main.mainPanel.getLayout();
+                        cl.show(main.mainPanel, "home");
+                        // TODO: Open dashboard based on role
+                        
+                    } else {
+                        JOptionPane.showMessageDialog(this,
+                                "Invalid password!",
+                                "Login Error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(this,
+                                "No User found in "+ selectedRole,
+                                "User Not Found",
+                                JOptionPane.ERROR_MESSAGE);
+                }
+
+                pst.close();
+                conn.close();
+
+            } catch (ClassNotFoundException | SQLException e) {
+                System.out.println("Error in register: " + e.getMessage());
+                JOptionPane.showMessageDialog(this,
+                        "Registration UnSuccessful: " + e.getMessage(),
+                        "Success",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        } else {
             JOptionPane.showMessageDialog(this,
-                    "Password must be at least 6 characters long.",
-                    "Weak Password",
+                    result,
+                    "Validation Error",
                     JOptionPane.ERROR_MESSAGE
             );
-        } else {
-            password.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         }
-        
+
+
     }//GEN-LAST:event_signinButton1ActionPerformed
 
     private void studentButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentButton1ActionPerformed
@@ -258,7 +317,7 @@ public class Login extends javax.swing.JPanel {
 
         adminButton1.setBackground(new Color(242, 242, 242));
         adminButton1.setForeground(new java.awt.Color(0, 0, 0));
-
+        selectedRole = "Student";
         signinButton1.setText("Sign in as Student");
     }//GEN-LAST:event_studentButton1ActionPerformed
 
@@ -272,6 +331,7 @@ public class Login extends javax.swing.JPanel {
         adminButton1.setBackground(new Color(242, 242, 242));
         adminButton1.setForeground(new java.awt.Color(0, 0, 0));
 
+        selectedRole = "Faculty";
         signinButton1.setText("Sign in as Faculty");
     }//GEN-LAST:event_facultyButton1ActionPerformed
 
@@ -284,6 +344,8 @@ public class Login extends javax.swing.JPanel {
 
         studentButton1.setBackground(new Color(242, 242, 242));
         studentButton1.setForeground(new java.awt.Color(0, 0, 0));
+        
+        selectedRole = "Admin";
         signinButton1.setText("Sign in as Admin");
     }//GEN-LAST:event_adminButton1ActionPerformed
 
