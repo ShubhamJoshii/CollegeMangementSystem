@@ -11,6 +11,7 @@ public class Login extends javax.swing.JPanel {
 
     MainFrame main;
     private String selectedRole;
+
     public Login(MainFrame main) {
         initComponents();
         this.main = main;
@@ -37,9 +38,11 @@ public class Login extends javax.swing.JPanel {
         registerBtn = new javax.swing.JButton();
         password = new javax.swing.JPasswordField();
         jLabel12 = new javax.swing.JLabel();
+        homeRedirectBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(248, 251, 255));
         setName("Login "); // NOI18N
+        setPreferredSize(new java.awt.Dimension(1170, 800));
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo.png"))); // NOI18N
@@ -186,6 +189,14 @@ public class Login extends javax.swing.JPanel {
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("© 2025 EduManage. All rights reserved.");
 
+        homeRedirectBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        homeRedirectBtn.setText("HOME");
+        homeRedirectBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                homeRedirectBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -195,7 +206,7 @@ public class Login extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1123, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1138, Short.MAX_VALUE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(14, 14, 14))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -204,12 +215,18 @@ public class Login extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(342, 342, 342)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 364, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(homeRedirectBtn)
+                .addGap(38, 38, 38))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(97, Short.MAX_VALUE)
+                .addGap(38, 38, 38)
+                .addComponent(homeRedirectBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
@@ -258,32 +275,33 @@ public class Login extends javax.swing.JPanel {
                 pst.setString(2, selectedRole);
 
                 ResultSet res = pst.executeQuery();
-                
 
                 if (res.next()) {
                     String hashedPassword = res.getString("password");
                     if (BCrypt.checkpw(new String(pass), hashedPassword)) {
                         JOptionPane.showMessageDialog(this, "Login Successful!");
 
-                        // Get user role (optional)
-                        String role = res.getString("role");
-                        System.out.println("Logged in as: " + role);
+                        UserSession.setSession(res.getInt("userID"), res.getString("userName"), res.getString("role"));
 
+                        // Get user role (optional)
+//                        String role = res.getString("role");
+                        System.out.println("User ID: " + res.getInt("userID") + " UserName: " + res.getString("userName") + "User Role: " + res.getString("role"));
+                        
                         CardLayout cl = (CardLayout) main.mainPanel.getLayout();
                         cl.show(main.mainPanel, "home");
                         // TODO: Open dashboard based on role
-                        
+
                     } else {
                         JOptionPane.showMessageDialog(this,
                                 "Invalid password!",
                                 "Login Error",
                                 JOptionPane.ERROR_MESSAGE);
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(this,
-                                "No User found in "+ selectedRole,
-                                "User Not Found",
-                                JOptionPane.ERROR_MESSAGE);
+                            "No User found in " + selectedRole,
+                            "User Not Found",
+                            JOptionPane.ERROR_MESSAGE);
                 }
 
                 pst.close();
@@ -344,7 +362,7 @@ public class Login extends javax.swing.JPanel {
 
         studentButton1.setBackground(new Color(242, 242, 242));
         studentButton1.setForeground(new java.awt.Color(0, 0, 0));
-        
+
         selectedRole = "Admin";
         signinButton1.setText("Sign in as Admin");
     }//GEN-LAST:event_adminButton1ActionPerformed
@@ -354,11 +372,19 @@ public class Login extends javax.swing.JPanel {
         cl.show(main.mainPanel, "register");
     }//GEN-LAST:event_registerBtnActionPerformed
 
+    private void homeRedirectBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeRedirectBtnActionPerformed
+        // TODO add your handling code here:
+        CardLayout cl = (CardLayout) main.mainPanel.getLayout();
+        cl.show(main.mainPanel, "home");
+
+    }//GEN-LAST:event_homeRedirectBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton adminButton1;
     private javax.swing.JTextField email;
     private javax.swing.JButton facultyButton1;
+    private javax.swing.JButton homeRedirectBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;

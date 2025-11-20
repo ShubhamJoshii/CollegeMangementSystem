@@ -40,8 +40,10 @@ public class Register extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        homeRedirectBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(248, 251, 255));
+        setPreferredSize(new java.awt.Dimension(1170, 800));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -197,6 +199,14 @@ public class Register extends javax.swing.JPanel {
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo.png"))); // NOI18N
 
+        homeRedirectBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        homeRedirectBtn.setText("HOME");
+        homeRedirectBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                homeRedirectBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -211,14 +221,20 @@ public class Register extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(126, 126, 126))
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1158, Short.MAX_VALUE)))
                     .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(homeRedirectBtn)
+                .addGap(44, 44, 44))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(100, Short.MAX_VALUE)
+                .addGap(42, 42, 42)
+                .addComponent(homeRedirectBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addComponent(jLabel12)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
@@ -348,7 +364,6 @@ public class Register extends javax.swing.JPanel {
     }//GEN-LAST:event_registerButtonActionPerformed
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
-        // TODO add your handling code here:
         CardLayout cl = (CardLayout) main.mainPanel.getLayout();
         cl.show(main.mainPanel, "login");
     }//GEN-LAST:event_registerBtnActionPerformed
@@ -362,17 +377,23 @@ public class Register extends javax.swing.JPanel {
     }//GEN-LAST:event_contactNumberActionPerformed
 
     private void userRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userRoleActionPerformed
-        // TODO add your handling code here:
         String selectedChoice = userRole.getSelectedItem().toString();
 //        System.out.println("Selected: " + selectedChoice);
         registerButton.setText("Register as " + selectedChoice);
     }//GEN-LAST:event_userRoleActionPerformed
+
+    private void homeRedirectBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeRedirectBtnActionPerformed
+        CardLayout cl = (CardLayout) main.mainPanel.getLayout();
+        cl.show(main.mainPanel, "home");
+
+    }//GEN-LAST:event_homeRedirectBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPasswordField confirmPassword;
     private javax.swing.JTextField contactNumber;
     private javax.swing.JTextField email;
+    private javax.swing.JButton homeRedirectBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

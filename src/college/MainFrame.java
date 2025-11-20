@@ -11,17 +11,31 @@ public class MainFrame extends javax.swing.JFrame {
                         getClass().getResource("/images/Logo.png")
                 ).getImage()
         );
-            Login loginPanel = new Login(this);
+        Login loginPanel = new Login(this);
         Register registerPanel = new Register(this);
         Home homePanel = new Home(this);
         Students studentPanel = new Students(this);
-        
-        mainPanel.add(loginPanel, "login");
-        mainPanel.add(registerPanel, "register");
+        TimeTable timeTablePanel = new TimeTable(this);
+        StudentEntryForm studentEntryForm = new StudentEntryForm(this);
+        LeaveRequest leaverequestPanel = new LeaveRequest(this);
+        Fees feesPanel = new Fees(this);
+        Course coursePanel = new Course(this);
+        Attendence attendencePanel = new Attendence(this);
+        Announcement announcementPanel = new Announcement(this);
+      
         
         mainPanel.add(homePanel, "home");
+        mainPanel.add(studentEntryForm, "studentForm");
+        mainPanel.add(loginPanel, "login");
+        mainPanel.add(registerPanel, "register");
         mainPanel.add(studentPanel, "students");
-    
+        mainPanel.add(timeTablePanel,"timetable");
+        mainPanel.add(leaverequestPanel,"leaverequest");
+        mainPanel.add(feesPanel,"fees");
+        mainPanel.add(announcementPanel,"announcement");
+        mainPanel.add(coursePanel,"course");
+        mainPanel.add(attendencePanel,"attendence");
+
     }
 
     @SuppressWarnings("unchecked")
@@ -34,7 +48,9 @@ public class MainFrame extends javax.swing.JFrame {
         setTitle("COLLEGE MANAGEMENT SYSTEM");
         setIconImages(null);
         setName("mainFrame"); // NOI18N
+        setPreferredSize(new java.awt.Dimension(1170, 800));
 
+        mainPanel.setBackground(new java.awt.Color(255, 255, 255));
         mainPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         mainPanel.setMinimumSize(new java.awt.Dimension(1920, 1080));
         mainPanel.setLayout(new java.awt.CardLayout());
