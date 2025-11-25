@@ -1,29 +1,33 @@
 package college;
 
 import java.awt.CardLayout;
-
+import javax.swing.JOptionPane;
 
 public class Header extends javax.swing.JPanel {
+
     MainFrame main;
 
     public Header(MainFrame main) {
         initComponents();
         this.main = main;
         updateButtonVisibility();
+//        registerBtn.setVisible(false);
     }
 
     public final void updateButtonVisibility() {
         if (UserSession.isLoggedIn()) {
-            System.out.println(UserSession.getUsername());
+            System.out.println("RUNNING " + UserSession.getUsername());
             loginBtn.setVisible(false);
             registerBtn.setVisible(false);
             logoutBtn.setVisible(true);
-//             if("Faculty".equals(UserSession.getUserRole())) jPanel1.remove(feesBtn); 
+//            if("Faculty".equals(UserSession.getUserRole())) jPanel1.remove(feesBtn); 
             afterLoginText.setText("Welcome to EduVerse: " + UserSession.getUsername() + " you logged in as " + UserSession.getUserRole());
         } else {
             loginBtn.setVisible(true);
-            registerBtn.setVisible(true);
+            registerBtn.setVisible(false);
             logoutBtn.setVisible(false);
+            afterLoginText.setText("Welcome to EduVerse!");
+        
             // lblUsername.setText("Welcome, Guest"); } }
         }
         revalidate();
@@ -42,9 +46,9 @@ public class Header extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         afterLoginText = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        loginBtn = new javax.swing.JButton();
         registerBtn = new javax.swing.JButton();
         logoutBtn = new javax.swing.JButton();
+        loginBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(248, 251, 255));
         setPreferredSize(new java.awt.Dimension(1170, 112));
@@ -67,15 +71,7 @@ public class Header extends javax.swing.JPanel {
         afterLoginText.setText("Welcome to EduVerse");
 
         jPanel1.setOpaque(false);
-        jPanel1.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
-
-        loginBtn.setText("Login");
-        loginBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginBtnActionPerformed(evt);
-            }
-        });
-        jPanel1.add(loginBtn);
+        jPanel1.setLayout(new java.awt.GridLayout(1, 1, 10, 0));
 
         registerBtn.setText("Register");
         registerBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -93,20 +89,29 @@ public class Header extends javax.swing.JPanel {
         });
         jPanel1.add(logoutBtn);
 
+        loginBtn.setText("Login");
+        loginBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(loginBtn);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel11)
-                .addGap(615, 615, 615)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(208, 208, 208)
-                .addComponent(afterLoginText, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(697, Short.MAX_VALUE)
+                        .addComponent(afterLoginText, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(42, 42, 42))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,24 +120,37 @@ public class Header extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(afterLoginText)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         CardLayout cl = (CardLayout) main.mainPanel.getLayout();
         cl.show(main.mainPanel, "login");
+        main.showHeader(false);
+
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
         CardLayout cl = (CardLayout) main.mainPanel.getLayout();
         cl.show(main.mainPanel, "register");
+        main.showHeader(false);
     }//GEN-LAST:event_registerBtnActionPerformed
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
-        // TODO add your handling code here:
+        int response = JOptionPane.showConfirmDialog(
+                null,
+                "Are you sure you want to log out?",
+                "Confirm Logout",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+        if (response == JOptionPane.YES_OPTION) {
+            UserSession.cleanSession();
+            main.updateButtonVisibility();
+        }
     }//GEN-LAST:event_logoutBtnActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown

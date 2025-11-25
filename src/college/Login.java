@@ -16,6 +16,7 @@ public class Login extends javax.swing.JPanel {
         initComponents();
         this.main = main;
         this.selectedRole = "Student";
+        registerBtn.setVisible(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -63,7 +64,7 @@ public class Login extends javax.swing.JPanel {
         jLabel9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel9.setText("Email");
 
-        email.setText("shubhamjoshi@gmail.com");
+        email.setText("shubhamjoshi45@gmail.com");
         email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 emailActionPerformed(evt);
@@ -142,7 +143,7 @@ public class Login extends javax.swing.JPanel {
             }
         });
 
-        password.setText("Joshi@123");
+        password.setText("password");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -206,20 +207,20 @@ public class Login extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1138, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1294, Short.MAX_VALUE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(14, 14, 14))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(342, 342, 342)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 364, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(homeRedirectBtn)
                 .addGap(38, 38, 38))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(420, 420, 420)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -230,19 +231,15 @@ public class Login extends javax.swing.JPanel {
                 .addComponent(jLabel8)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addGap(43, 43, 43)
+                .addGap(26, 26, 26)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(35, 35, 35)
                 .addComponent(jLabel12)
                 .addGap(65, 65, 65))
         );
 
         getAccessibleContext().setAccessibleName("Login");
     }// </editor-fold>//GEN-END:initComponents
-
-    private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_emailActionPerformed
 
     private String checkValidation(char[] pass) {
         // Email Validation
@@ -279,18 +276,19 @@ public class Login extends javax.swing.JPanel {
                 if (res.next()) {
                     String hashedPassword = res.getString("password");
                     if (BCrypt.checkpw(new String(pass), hashedPassword)) {
-                        JOptionPane.showMessageDialog(this, "Login Successful!");
-
-                        UserSession.setSession(res.getInt("userID"), res.getString("userName"), res.getString("role"));
-
-                        // Get user role (optional)
-//                        String role = res.getString("role");
-                        System.out.println("User ID: " + res.getInt("userID") + " UserName: " + res.getString("userName") + "User Role: " + res.getString("role"));
-                        
+                        UserSession.setSession(res.getInt("userID"), res.getString("role"));
                         CardLayout cl = (CardLayout) main.mainPanel.getLayout();
-                        cl.show(main.mainPanel, "home");
-                        // TODO: Open dashboard based on role
-
+                        if ("Complete".equalsIgnoreCase(res.getString("status"))) {
+                            JOptionPane.showMessageDialog(this, "Login Successful!");
+                            main.updateButtonVisibility();
+                    
+                            main.showHeader(true);
+                            cl.show(main.mainPanel, "home");
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Login Successful but Complete your Profile First!");
+                            main.studentForm.updateDetails();
+                            cl.show(main.mainPanel, "studentForm");
+                        }
                     } else {
                         JOptionPane.showMessageDialog(this,
                                 "Invalid password!",
@@ -308,7 +306,7 @@ public class Login extends javax.swing.JPanel {
                 conn.close();
 
             } catch (ClassNotFoundException | SQLException e) {
-                System.out.println("Error in register: " + e.getMessage());
+                System.out.println("Error in Login: " + e.getMessage());
                 JOptionPane.showMessageDialog(this,
                         "Registration UnSuccessful: " + e.getMessage(),
                         "Success",
@@ -376,8 +374,13 @@ public class Login extends javax.swing.JPanel {
         // TODO add your handling code here:
         CardLayout cl = (CardLayout) main.mainPanel.getLayout();
         cl.show(main.mainPanel, "home");
+        main.showHeader(true);
 
     }//GEN-LAST:event_homeRedirectBtnActionPerformed
+
+    private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_emailActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

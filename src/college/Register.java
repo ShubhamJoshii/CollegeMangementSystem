@@ -7,7 +7,6 @@ import collegemanagement.*;
 import java.sql.*;
 import org.mindrot.jbcrypt.BCrypt;
 
-
 public class Register extends javax.swing.JPanel {
 
     MainFrame main;
@@ -112,6 +111,11 @@ public class Register extends javax.swing.JPanel {
 
         userRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Student", "Faculty", "Admin" }));
         userRole.setPreferredSize(new java.awt.Dimension(72, 30));
+        userRole.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                userRoleItemStateChanged(evt);
+            }
+        });
         userRole.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 userRoleActionPerformed(evt);
@@ -216,18 +220,18 @@ public class Register extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(126, 126, 126))
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1158, Short.MAX_VALUE)))
+                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 1315, Short.MAX_VALUE))
                     .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(homeRedirectBtn)
-                .addGap(44, 44, 44))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(homeRedirectBtn)
+                        .addGap(44, 44, 44))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(228, 228, 228))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -307,7 +311,7 @@ public class Register extends javax.swing.JPanel {
         char[] confirmPass = confirmPassword.getPassword();
         String result = checkValidation(pass, confirmPass);
         // hashing
-        
+
         if (result == null) {
             String hashedPassword = BCrypt.hashpw(new String(pass), BCrypt.gensalt(12));
 
@@ -332,7 +336,8 @@ public class Register extends javax.swing.JPanel {
                             "Success",
                             JOptionPane.INFORMATION_MESSAGE
                     );
-
+                    CardLayout cl = (CardLayout) main.mainPanel.getLayout();
+                    cl.show(main.mainPanel, "login");
                 } else {
                     System.out.println("Un-Success");
                     JOptionPane.showMessageDialog(this,
@@ -348,10 +353,10 @@ public class Register extends javax.swing.JPanel {
             } catch (ClassNotFoundException | SQLException e) {
                 System.out.println("Error in register: " + e.getMessage());
                 JOptionPane.showMessageDialog(this,
-                            "Registration UnSuccessful: " + e.getMessage(),
-                            "Success",
-                            JOptionPane.INFORMATION_MESSAGE
-                    );
+                        "Registration UnSuccessful: " + e.getMessage(),
+                        "Success",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
             }
 
         } else {
@@ -369,24 +374,27 @@ public class Register extends javax.swing.JPanel {
     }//GEN-LAST:event_registerBtnActionPerformed
 
     private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_emailActionPerformed
 
     private void contactNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactNumberActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_contactNumberActionPerformed
 
     private void userRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userRoleActionPerformed
         String selectedChoice = userRole.getSelectedItem().toString();
-//        System.out.println("Selected: " + selectedChoice);
         registerButton.setText("Register as " + selectedChoice);
     }//GEN-LAST:event_userRoleActionPerformed
 
     private void homeRedirectBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeRedirectBtnActionPerformed
         CardLayout cl = (CardLayout) main.mainPanel.getLayout();
         cl.show(main.mainPanel, "home");
-
+        main.showHeader(true);
     }//GEN-LAST:event_homeRedirectBtnActionPerformed
+
+    private void userRoleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_userRoleItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userRoleItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

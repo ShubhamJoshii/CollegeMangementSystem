@@ -4,23 +4,12 @@
  */
 package college;
 
-import java.awt.BorderLayout;
-
-/**
- *
- * @author Hp
- */
 public class Fees extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Fees
-     */
     MainFrame main;
     public Fees(MainFrame main) {
         initComponents();
         this.main = main;
-        headerContainer.setLayout(new BorderLayout());
-        headerContainer.add(new Header(main));
     }
 
     /**
@@ -32,30 +21,21 @@ public class Fees extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        headerContainer = new javax.swing.JPanel();
-
         setPreferredSize(new java.awt.Dimension(1170, 800));
-
-        headerContainer.setBackground(new java.awt.Color(248, 251, 255));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(headerContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 1164, Short.MAX_VALUE))
+            .addGap(0, 1315, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(headerContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 713, Short.MAX_VALUE))
+            .addGap(0, 630, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel headerContainer;
     // End of variables declaration//GEN-END:variables
 }
