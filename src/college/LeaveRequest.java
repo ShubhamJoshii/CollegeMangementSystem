@@ -31,6 +31,7 @@ public class LeaveRequest extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(248, 251, 255));
         setPreferredSize(new java.awt.Dimension(1170, 800));
 
         jLabel1.setText("Leave Request");

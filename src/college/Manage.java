@@ -27,6 +27,7 @@ public class Manage extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(248, 251, 255));
         setPreferredSize(new java.awt.Dimension(1170, 800));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N

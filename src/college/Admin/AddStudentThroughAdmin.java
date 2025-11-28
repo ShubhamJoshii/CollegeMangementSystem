@@ -74,6 +74,7 @@ public final class AddStudentThroughAdmin extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Add New Student");
+        setBackground(new java.awt.Color(248, 251, 255));
         setModal(true);
         setResizable(false);
 

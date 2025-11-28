@@ -24,6 +24,7 @@ public class Course extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        setBackground(new java.awt.Color(248, 251, 255));
         setPreferredSize(new java.awt.Dimension(1170, 800));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

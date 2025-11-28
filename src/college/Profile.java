@@ -68,7 +68,7 @@ public class Profile extends javax.swing.JPanel {
         jLabel31 = new javax.swing.JLabel();
         address = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(248, 251, 255));
 
         applicationNo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         applicationNo.setText("MCA0445488");
@@ -271,8 +271,7 @@ public class Profile extends javax.swing.JPanel {
                         .addGap(6, 6, 6)
                         .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
-                        .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
         detailsPanelLayout.setVerticalGroup(

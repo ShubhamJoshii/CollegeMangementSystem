@@ -7,13 +7,15 @@ import java.util.stream.Collectors;
 
 import collegemanagement.DBConnection;
 import collegemanagement.Subject;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JLabel;
-import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 class TimeSlots {
@@ -45,11 +47,11 @@ public final class TimeTable extends javax.swing.JPanel {
 
         javax.swing.table.JTableHeader header = timeTable.getTableHeader();
         header.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
-        header.setBackground(new java.awt.Color(252, 233, 218));  
+        header.setBackground(new java.awt.Color(252, 233, 218));
         header.setReorderingAllowed(false);
         header.setPreferredSize(new java.awt.Dimension(header.getWidth(), 60));
         timeTable.setRowHeight(50);
-        
+
         fetchCourses();
     }
 
@@ -65,6 +67,9 @@ public final class TimeTable extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         timeTable = new javax.swing.JTable();
         generateNewTimeTable = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        coursesPanel = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(248, 251, 255));
         setPreferredSize(new java.awt.Dimension(1300, 800));
@@ -100,7 +105,7 @@ public final class TimeTable extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Select Semster");
 
-        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.setBackground(new java.awt.Color(248, 251, 255));
 
         timeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -138,6 +143,15 @@ public final class TimeTable extends javax.swing.JPanel {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setText("Teachers");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setText("Courses");
+
+        coursesPanel.setBackground(new java.awt.Color(255, 255, 255));
+        coursesPanel.setLayout(new javax.swing.BoxLayout(coursesPanel, javax.swing.BoxLayout.LINE_AXIS));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -150,7 +164,7 @@ public final class TimeTable extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(63, 63, 63)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 457, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 431, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(selectCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -162,6 +176,17 @@ public final class TimeTable extends javax.swing.JPanel {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(generateNewTimeTable)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(94, 94, 94)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(coursesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addGap(318, 318, 318))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,9 +202,16 @@ public final class TimeTable extends javax.swing.JPanel {
                 .addComponent(generateNewTimeTable, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(58, 58, 58)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(181, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(coursesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(193, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
     public void fetchCourses() {
         try {
             Connection conn = DBConnection.getConnection();
@@ -270,27 +302,60 @@ public final class TimeTable extends javax.swing.JPanel {
     }
 
     public void fetchSubjectCourse(String courseCode, int courseSemester) {
-        System.out.println(courseCode + "   " + courseSemester);
+        String subjectName, subjectCode, userName, classType, shortName;
         String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
         List<Subject> subjectList = new ArrayList<Subject>();
         List<String> condition = new ArrayList<String>();
-        String slotType;
+
         Object[][] data = new Object[days.length][10];
         for (int i = 0; i < days.length; i++) {
             data[i][0] = days[i];
             data[i][3] = "T E A   B R E A K";
             data[i][6] = "L U N C H   B R E A K";
         }
+        String slotType;
 
-        subjectList.add(new Subject("Discrete Structures", "DS", "class", 6));
-        subjectList.add(new Subject("Computer Networks", "CN", "class", 4));
-        subjectList.add(new Subject("Operating Systems with Linux", "OS", "class", 4));
-        subjectList.add(new Subject("Database Management Systems", "DBMS", "class", 6));
-        subjectList.add(new Subject("Object Oriented Programming and Java", "OOPS", "class", 6));
-        subjectList.add(new Subject("Computer Networks", "CN (Lab)", "lab", 2));
-        subjectList.add(new Subject("Operating Systems with Linux", "OS (Lab)", "lab", 2));
-        subjectList.add(new Subject("Database Management Systems (Lab)", "DBMS (Lab)", "lab", 2));
-        subjectList.add(new Subject("Object Oriented Programming and Java (Lab)", "OOPS (Lab)", "lab", 2));
+        try {
+            model.setRowCount(0);
+            Connection conn = DBConnection.getConnection();
+
+            String sql = "SELECT s.subjectName, s.subjectCode, s.type, u.userName, s.shortName "
+                    + "FROM course_subjects s "
+                    + "JOIN teachers t ON t.employeeId = s.teachesBy "
+                    + "JOIN courses c ON c.courseId = s.courseId "
+                    + "JOIN users u ON u.userId = t.userId "
+                    + "WHERE c.courseCode = ?  AND s.semester = ?;";
+            PreparedStatement pst = conn.prepareStatement(sql);
+
+            pst.setString(1, courseCode);
+            pst.setInt(2, courseSemester);
+
+            try (ResultSet res = pst.executeQuery()) {
+                boolean hasResults = false;
+                while (res.next()) {
+                    hasResults = true;
+
+                    subjectName = res.getString("subjectName");
+                    subjectCode = res.getString("subjectCode");
+                    userName = res.getString("userName");
+                    classType = res.getString("type");
+                    shortName = res.getString("shortName");
+
+                    subjectList.add(new Subject(subjectName, shortName.toUpperCase(), classType.toLowerCase(), 6));
+                }
+
+                if (!hasResults) {
+                    System.out.println("No subjects found for this course and semester.");
+                } else {
+                    System.out.println("Subjects loaded successfully.");
+                }
+            }
+            pst.close();
+            conn.close();
+
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("Error in Time Table: " + e.getMessage());
+        }
 
         for (Object[] data1 : data) {
             for (int j = 0; j < data1.length; j++) {
@@ -308,39 +373,70 @@ public final class TimeTable extends javax.swing.JPanel {
         for (Object[] data1 : data) {
             model.addRow(data1);
         }
+        updateCourseLegend(subjectList);
+    }
+    
+    
+//        subjectList.add(new Subject("Discrete Structures", "DS", "class", 6));
+//        subjectList.add(new Subject("Computer Networks", "CN", "class", 4));
+//        subjectList.add(new Subject("Operating Systems with Linux", "OS", "class", 4));
+//        subjectList.add(new Subject("Database Management Systems", "DBMS", "class", 6));
+//        subjectList.add(new Subject("Object Oriented Programming and Java", "OOPS", "class", 6));
+//        subjectList.add(new Subject("Computer Networks", "CN (Lab)", "lab", 2));
+//        subjectList.add(new Subject("Operating Systems with Linux", "OS (Lab)", "lab", 2));
+//        subjectList.add(new Subject("Database Management Systems (Lab)", "DBMS (Lab)", "lab", 2));
+//        subjectList.add(new Subject("Object Oriented Programming and Java (Lab)", "OOPS (Lab)", "lab", 2));
 
-//        try {
-//            Connection conn = DBConnection.getConnection();
-//            int count = 0;
-//            String sql = "SELECT cs.subjectName, cs.type, cs.description, cs.subjectId, c.courseCode "
-//                    + "FROM course_subjects cs "
-//                    + "JOIN courses c ON c.courseId = cs.courseId "
-//                    + "WHERE c.courseCode = ? AND cs.semester = ?";
-//            PreparedStatement ps = conn.prepareStatement(sql);
-//            ps.setString(1, courseCode);
-//            ps.setInt(2, courseSemester);
-//            ResultSet rs = ps.executeQuery();
-//            model.setRowCount(0);
-//            System.out.println("Ruunning2" + courseCode + " " + courseSemester);
-//            while (rs.next()) {
-//                String subjectName = rs.getString("subjectName");
-//                String classType = rs.getString("type");
-//                subjectList.add(new Subject(subjectName,"DS",classType,0));                
-//                String subjectDescription = rs.getString("description");
-//                Subjects(subjectName,"DS",classType,0);
-//                String userStatus = rs.getString("status");
-//                System.out.println(id + " " + userName + " " + classType + " " + subjectDescription + " " + userStatus);
-//                model.addRow(new Object[]{++count, id, userName, courseCode, classType, subjectDescription});
-//                model.addRow(new Object[]{"Monday", "", "", "T E A   B R E A K", "", "", "L U N C H   B R E A K", "", "", ""});
-//            }
-//            for(Subject sub:subjectList){
-//                System.out.println(sub.getS_name());
-//            }
-//        } catch (ClassNotFoundException | SQLException e) {
-//            System.out.println("Error in register: " + e.getMessage());
-//        }
+    private void updateCourseLegend(List<Subject> subjects) {
+        coursesPanel.removeAll();
+        coursesPanel.setLayout(new javax.swing.BoxLayout(coursesPanel, javax.swing.BoxLayout.Y_AXIS));
+
+        for (Subject s : subjects) {
+            if (s.classType.equalsIgnoreCase("class")) {
+                // Create a row
+                javax.swing.JPanel row = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+                row.setBackground(Color.WHITE);
+                row.setMaximumSize(new Dimension(1000, 30)); // Max height 30px
+
+                // Generate a consistent color based on the subject name
+                Color subjectColor = getSubjectColor(s.shortName);
+
+                // Short Name (e.g., DS)
+                javax.swing.JLabel lblAbbr = new javax.swing.JLabel(s.shortName);
+                lblAbbr.setFont(new Font("Segoe UI", java.awt.Font.BOLD, 12));
+                lblAbbr.setForeground(subjectColor);
+                lblAbbr.setPreferredSize(new Dimension(50, 20)); // Fixed width for alignment
+
+                // Separator
+                javax.swing.JLabel lblSep = new javax.swing.JLabel(" : ");
+                lblSep.setForeground(Color.GRAY);
+
+                // Full Name
+                javax.swing.JLabel lblName = new javax.swing.JLabel(s.getS_name());
+                lblName.setFont(new Font("Segoe UI", java.awt.Font.BOLD, 12));
+                lblName.setForeground(subjectColor);
+
+                row.add(lblAbbr);
+                row.add(lblSep);
+                row.add(lblName);
+
+                coursesPanel.add(row);
+            }
+        }
+        coursesPanel.revalidate();
+        coursesPanel.repaint();
     }
 
+    private java.awt.Color getSubjectColor(String shortName) {
+        return switch (shortName.toUpperCase()) {
+            case "DS" -> new java.awt.Color(218, 165, 32);
+            case "CN" -> java.awt.Color.BLACK;
+            case "OS" -> new java.awt.Color(60, 179, 113);
+            case "DBMS" -> new java.awt.Color(139, 69, 19);
+            case "JAVA", "OOPS" -> new java.awt.Color(0, 0, 139);
+            default -> java.awt.Color.DARK_GRAY;
+        };
+    }
 
     private void selectCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectCourseActionPerformed
         Object selected = selectCourse.getSelectedItem();
@@ -375,10 +471,13 @@ public final class TimeTable extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel coursesPanel;
     private javax.swing.JButton generateNewTimeTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JComboBox<String> selectCourse;
     private javax.swing.JComboBox<String> selectSemster;
