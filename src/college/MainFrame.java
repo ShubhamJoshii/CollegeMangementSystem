@@ -69,12 +69,12 @@ public class MainFrame extends javax.swing.JFrame {
         setTitle("COLLEGE MANAGEMENT SYSTEM");
         setIconImages(null);
         setName("mainFrame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1400, 800));
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
         mainPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         mainPanel.setMinimumSize(new java.awt.Dimension(1920, 1080));
-        mainPanel.setPreferredSize(new java.awt.Dimension(1400, 0));
+        mainPanel.setName(""); // NOI18N
+        mainPanel.setPreferredSize(new java.awt.Dimension(1400, 850));
         mainPanel.setLayout(new java.awt.CardLayout());
         getContentPane().add(mainPanel, java.awt.BorderLayout.CENTER);
 

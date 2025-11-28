@@ -1,5 +1,7 @@
 package collegemanagement;
 
+import java.awt.Color;
+
 public class Subject {
     private String s_name;
     public String shortName;
@@ -7,15 +9,17 @@ public class Subject {
     public int takenClasses = 0;
     public int remainingClasses = 0;
     private int WeeklyTotalClasses;
-
+    public Color color;
+    
     // FIX: Changed the constructor to public for standard class design.
-    public Subject(String s_name, String shortName, String classType, int WeeklyTotalClasses) {
+    public Subject(String s_name, String shortName, String classType, int WeeklyTotalClasses, Color color) {
         this.s_name = s_name;
         this.shortName = shortName;
         this.classType = classType;
         // Initialize remainingClasses to the total weekly classes
         this.remainingClasses = WeeklyTotalClasses; 
         this.WeeklyTotalClasses = WeeklyTotalClasses;
+        this.color = color;
     }
 
     /**
